@@ -1,0 +1,11 @@
+D:\CODES\C# CODES\Enrollment System\Enrollment System\bin\Debug\Velayo.accdb
+D:\CODES\C# CODES\Enrollment System\Enrollment System\bin\Debug\Enrollment System.exe.config
+D:\CODES\C# CODES\Enrollment System\Enrollment System\bin\Debug\Enrollment System.exe
+D:\CODES\C# CODES\Enrollment System\Enrollment System\bin\Debug\Enrollment System.pdb
+D:\CODES\C# CODES\Enrollment System\Enrollment System\obj\Debug\Enrollment System.csproj.AssemblyReference.cache
+D:\CODES\C# CODES\Enrollment System\Enrollment System\obj\Debug\Enrollment_System.Form1.resources
+D:\CODES\C# CODES\Enrollment System\Enrollment System\obj\Debug\Enrollment_System.Properties.Resources.resources
+D:\CODES\C# CODES\Enrollment System\Enrollment System\obj\Debug\Enrollment System.csproj.GenerateResource.cache
+D:\CODES\C# CODES\Enrollment System\Enrollment System\obj\Debug\Enrollment System.csproj.CoreCompileInputs.cache
+D:\CODES\C# CODES\Enrollment System\Enrollment System\obj\Debug\Enrollment System.exe
+D:\CODES\C# CODES\Enrollment System\Enrollment System\obj\Debug\Enrollment System.pdb
