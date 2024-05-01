@@ -46,21 +46,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="SubjectEntryForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="SubjectEntryForm.Designer.cs">
+      <DependentUpon>SubjectEntryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MenuForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MenuForm.Designer.cs">
+      <DependentUpon>MenuForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubjectScheduleEntryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubjectScheduleEntryForm.Designer.cs">
+      <DependentUpon>SubjectScheduleEntryForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="VelayoDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>VelayoDataSet.xsd</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="SubjectEntryForm.resx">
+      <DependentUpon>SubjectEntryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MenuForm.resx">
+      <DependentUpon>MenuForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -71,6 +86,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="SubjectScheduleEntryForm.resx">
+      <DependentUpon>SubjectScheduleEntryForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
