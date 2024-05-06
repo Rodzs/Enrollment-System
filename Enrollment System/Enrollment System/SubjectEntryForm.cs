@@ -25,7 +25,7 @@ namespace Enrollment_System
 
         }
 
-        string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\SHADOW\Documents\Velayo.accdb";
+        string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CODES\C# CODES\Velayo.accdb";
         private void SaveButton_Click(object sender, EventArgs e)
         {
             OleDbConnection thisConnection = new OleDbConnection(connectionString);
@@ -212,6 +212,19 @@ namespace Enrollment_System
         private void SubjectEntryForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void ClearButton_Click(object sender, EventArgs e)
+        {
+            SubjectCodeTextBox.Text = null;
+            DescriptionTextBox.Text = null;
+            UnitsTextBox.Text = null;
+            OfferingComboBox.Text = null;
+            CategoryComboBox.Text = null;
+            StatusComboBox.Text = null;
+            CourseCodeComboBox.Text = null;
+            CurriculumYearTextBox.Text = null;
+            SubjectCodeRequisiteTextBox.Text = null;
         }
     }
 }

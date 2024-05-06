@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="StudentEntryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StudentEntryForm.Designer.cs">
+      <DependentUpon>StudentEntryForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubjectEntryForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,6 +77,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>VelayoDataSet.xsd</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="StudentEntryForm.resx">
+      <DependentUpon>StudentEntryForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SubjectEntryForm.resx">
       <DependentUpon>SubjectEntryForm.cs</DependentUpon>
     </EmbeddedResource>

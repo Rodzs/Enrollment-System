@@ -32,6 +32,7 @@
             this.SubjectEntryButton = new System.Windows.Forms.Button();
             this.SubjectScheduleButton = new System.Windows.Forms.Button();
             this.StudentEntryButton = new System.Windows.Forms.Button();
+            this.StudentEnrollmentEntryButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -49,7 +50,7 @@
             this.SubjectEntryButton.Font = new System.Drawing.Font("Harlow Solid Italic", 15.75F, System.Drawing.FontStyle.Italic);
             this.SubjectEntryButton.Location = new System.Drawing.Point(46, 192);
             this.SubjectEntryButton.Name = "SubjectEntryButton";
-            this.SubjectEntryButton.Size = new System.Drawing.Size(215, 216);
+            this.SubjectEntryButton.Size = new System.Drawing.Size(142, 216);
             this.SubjectEntryButton.TabIndex = 3;
             this.SubjectEntryButton.Text = "Subject Entry";
             this.SubjectEntryButton.UseVisualStyleBackColor = true;
@@ -58,9 +59,9 @@
             // SubjectScheduleButton
             // 
             this.SubjectScheduleButton.Font = new System.Drawing.Font("Harlow Solid Italic", 15.75F, System.Drawing.FontStyle.Italic);
-            this.SubjectScheduleButton.Location = new System.Drawing.Point(295, 192);
+            this.SubjectScheduleButton.Location = new System.Drawing.Point(241, 192);
             this.SubjectScheduleButton.Name = "SubjectScheduleButton";
-            this.SubjectScheduleButton.Size = new System.Drawing.Size(215, 216);
+            this.SubjectScheduleButton.Size = new System.Drawing.Size(144, 216);
             this.SubjectScheduleButton.TabIndex = 4;
             this.SubjectScheduleButton.Text = "Subject Schedule";
             this.SubjectScheduleButton.UseVisualStyleBackColor = true;
@@ -69,18 +70,30 @@
             // StudentEntryButton
             // 
             this.StudentEntryButton.Font = new System.Drawing.Font("Harlow Solid Italic", 15.75F, System.Drawing.FontStyle.Italic);
-            this.StudentEntryButton.Location = new System.Drawing.Point(536, 192);
+            this.StudentEntryButton.Location = new System.Drawing.Point(432, 192);
             this.StudentEntryButton.Name = "StudentEntryButton";
-            this.StudentEntryButton.Size = new System.Drawing.Size(215, 216);
+            this.StudentEntryButton.Size = new System.Drawing.Size(141, 216);
             this.StudentEntryButton.TabIndex = 5;
             this.StudentEntryButton.Text = "Student Entry";
             this.StudentEntryButton.UseVisualStyleBackColor = true;
+            this.StudentEntryButton.Click += new System.EventHandler(this.StudentEntryButton_Click);
+            // 
+            // StudentEnrollmentEntryButton
+            // 
+            this.StudentEnrollmentEntryButton.Font = new System.Drawing.Font("Harlow Solid Italic", 15.75F, System.Drawing.FontStyle.Italic);
+            this.StudentEnrollmentEntryButton.Location = new System.Drawing.Point(614, 192);
+            this.StudentEnrollmentEntryButton.Name = "StudentEnrollmentEntryButton";
+            this.StudentEnrollmentEntryButton.Size = new System.Drawing.Size(141, 216);
+            this.StudentEnrollmentEntryButton.TabIndex = 6;
+            this.StudentEnrollmentEntryButton.Text = "Student Enrollment Entry";
+            this.StudentEnrollmentEntryButton.UseVisualStyleBackColor = true;
             // 
             // MenuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.StudentEnrollmentEntryButton);
             this.Controls.Add(this.StudentEntryButton);
             this.Controls.Add(this.SubjectScheduleButton);
             this.Controls.Add(this.SubjectEntryButton);
@@ -101,5 +114,6 @@
         private System.Windows.Forms.Button SubjectEntryButton;
         private System.Windows.Forms.Button SubjectScheduleButton;
         private System.Windows.Forms.Button StudentEntryButton;
+        private System.Windows.Forms.Button StudentEnrollmentEntryButton;
     }
 }

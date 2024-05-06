@@ -31,11 +31,16 @@
             this.SubjectEDPCodeTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ClassSizeTextBox = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.MaxSizeTextBox = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.TimeEndDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.MenuButton = new System.Windows.Forms.Button();
             this.TimeStartDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.DescriptionLabel = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.AmPmComboBox = new System.Windows.Forms.ComboBox();
+            this.TimeStartAmPmComboBox = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.ClearButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
@@ -51,11 +56,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.SubjectCodeTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.TimeEndDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.ClassSizeTextBox = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.MaxSizeTextBox = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
+            this.TimeEndAmPmComboBox = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,6 +82,8 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.groupBox1.Controls.Add(this.TimeEndAmPmComboBox);
+            this.groupBox1.Controls.Add(this.label13);
             this.groupBox1.Controls.Add(this.ClassSizeTextBox);
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.MaxSizeTextBox);
@@ -89,7 +93,7 @@
             this.groupBox1.Controls.Add(this.TimeStartDateTimePicker);
             this.groupBox1.Controls.Add(this.DescriptionLabel);
             this.groupBox1.Controls.Add(this.label10);
-            this.groupBox1.Controls.Add(this.AmPmComboBox);
+            this.groupBox1.Controls.Add(this.TimeStartAmPmComboBox);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.ClearButton);
             this.groupBox1.Controls.Add(this.SaveButton);
@@ -115,6 +119,52 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Subject Schedule Entry";
             // 
+            // ClassSizeTextBox
+            // 
+            this.ClassSizeTextBox.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ClassSizeTextBox.Location = new System.Drawing.Point(209, 410);
+            this.ClassSizeTextBox.Name = "ClassSizeTextBox";
+            this.ClassSizeTextBox.Size = new System.Drawing.Size(231, 32);
+            this.ClassSizeTextBox.TabIndex = 35;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Harlow Solid Italic", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(104, 415);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(95, 26);
+            this.label11.TabIndex = 34;
+            this.label11.Text = "Class Size";
+            // 
+            // MaxSizeTextBox
+            // 
+            this.MaxSizeTextBox.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MaxSizeTextBox.Location = new System.Drawing.Point(209, 372);
+            this.MaxSizeTextBox.Name = "MaxSizeTextBox";
+            this.MaxSizeTextBox.Size = new System.Drawing.Size(231, 32);
+            this.MaxSizeTextBox.TabIndex = 33;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Harlow Solid Italic", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(107, 377);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(92, 26);
+            this.label12.TabIndex = 32;
+            this.label12.Text = "Max Size";
+            // 
+            // TimeEndDateTimePicker
+            // 
+            this.TimeEndDateTimePicker.CustomFormat = "hh: mm ";
+            this.TimeEndDateTimePicker.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Italic);
+            this.TimeEndDateTimePicker.Location = new System.Drawing.Point(209, 221);
+            this.TimeEndDateTimePicker.Name = "TimeEndDateTimePicker";
+            this.TimeEndDateTimePicker.Size = new System.Drawing.Size(231, 32);
+            this.TimeEndDateTimePicker.TabIndex = 31;
+            this.TimeEndDateTimePicker.Value = new System.DateTime(2024, 5, 6, 12, 0, 0, 0);
+            // 
             // MenuButton
             // 
             this.MenuButton.Font = new System.Drawing.Font("Harlow Solid Italic", 15.75F, System.Drawing.FontStyle.Italic);
@@ -128,12 +178,13 @@
             // 
             // TimeStartDateTimePicker
             // 
-            this.TimeStartDateTimePicker.CustomFormat = "hh: mm tt";
-            this.TimeStartDateTimePicker.Font = new System.Drawing.Font("Harlow Solid Italic", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TimeStartDateTimePicker.CustomFormat = "hh: mm ";
+            this.TimeStartDateTimePicker.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Italic);
             this.TimeStartDateTimePicker.Location = new System.Drawing.Point(209, 182);
             this.TimeStartDateTimePicker.Name = "TimeStartDateTimePicker";
-            this.TimeStartDateTimePicker.Size = new System.Drawing.Size(231, 34);
+            this.TimeStartDateTimePicker.Size = new System.Drawing.Size(231, 32);
             this.TimeStartDateTimePicker.TabIndex = 29;
+            this.TimeStartDateTimePicker.Value = new System.DateTime(2024, 5, 6, 12, 0, 0, 0);
             // 
             // DescriptionLabel
             // 
@@ -144,29 +195,28 @@
             this.DescriptionLabel.Name = "DescriptionLabel";
             this.DescriptionLabel.Size = new System.Drawing.Size(483, 34);
             this.DescriptionLabel.TabIndex = 28;
-            this.DescriptionLabel.Text = "Subject Code";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Harlow Solid Italic", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(82, 144);
+            this.label10.Location = new System.Drawing.Point(89, 144);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(117, 26);
+            this.label10.Size = new System.Drawing.Size(110, 26);
             this.label10.TabIndex = 27;
-            this.label10.Text = "Subject Code";
+            this.label10.Text = "Description";
             // 
-            // AmPmComboBox
+            // TimeStartAmPmComboBox
             // 
-            this.AmPmComboBox.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AmPmComboBox.FormattingEnabled = true;
-            this.AmPmComboBox.Items.AddRange(new object[] {
+            this.TimeStartAmPmComboBox.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TimeStartAmPmComboBox.FormattingEnabled = true;
+            this.TimeStartAmPmComboBox.Items.AddRange(new object[] {
             "AM",
             "PM"});
-            this.AmPmComboBox.Location = new System.Drawing.Point(586, 185);
-            this.AmPmComboBox.Name = "AmPmComboBox";
-            this.AmPmComboBox.Size = new System.Drawing.Size(106, 33);
-            this.AmPmComboBox.TabIndex = 18;
+            this.TimeStartAmPmComboBox.Location = new System.Drawing.Point(586, 185);
+            this.TimeStartAmPmComboBox.Name = "TimeStartAmPmComboBox";
+            this.TimeStartAmPmComboBox.Size = new System.Drawing.Size(106, 33);
+            this.TimeStartAmPmComboBox.TabIndex = 18;
             // 
             // label9
             // 
@@ -187,6 +237,7 @@
             this.ClearButton.TabIndex = 26;
             this.ClearButton.Text = "Clear";
             this.ClearButton.UseVisualStyleBackColor = true;
+            this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
             // 
             // SaveButton
             // 
@@ -298,6 +349,7 @@
             this.SubjectCodeTextBox.Name = "SubjectCodeTextBox";
             this.SubjectCodeTextBox.Size = new System.Drawing.Size(231, 32);
             this.SubjectCodeTextBox.TabIndex = 12;
+            this.SubjectCodeTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SubjectCodeTextBox_KeyPress);
             // 
             // label2
             // 
@@ -309,50 +361,27 @@
             this.label2.TabIndex = 11;
             this.label2.Text = "Subject Code";
             // 
-            // TimeEndDateTimePicker
+            // TimeEndAmPmComboBox
             // 
-            this.TimeEndDateTimePicker.CustomFormat = "hh: mm tt";
-            this.TimeEndDateTimePicker.Font = new System.Drawing.Font("Harlow Solid Italic", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TimeEndDateTimePicker.Location = new System.Drawing.Point(209, 221);
-            this.TimeEndDateTimePicker.Name = "TimeEndDateTimePicker";
-            this.TimeEndDateTimePicker.Size = new System.Drawing.Size(231, 34);
-            this.TimeEndDateTimePicker.TabIndex = 31;
+            this.TimeEndAmPmComboBox.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TimeEndAmPmComboBox.FormattingEnabled = true;
+            this.TimeEndAmPmComboBox.Items.AddRange(new object[] {
+            "AM",
+            "PM"});
+            this.TimeEndAmPmComboBox.Location = new System.Drawing.Point(586, 220);
+            this.TimeEndAmPmComboBox.Name = "TimeEndAmPmComboBox";
+            this.TimeEndAmPmComboBox.Size = new System.Drawing.Size(106, 33);
+            this.TimeEndAmPmComboBox.TabIndex = 37;
             // 
-            // ClassSizeTextBox
+            // label13
             // 
-            this.ClassSizeTextBox.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ClassSizeTextBox.Location = new System.Drawing.Point(209, 410);
-            this.ClassSizeTextBox.Name = "ClassSizeTextBox";
-            this.ClassSizeTextBox.Size = new System.Drawing.Size(231, 32);
-            this.ClassSizeTextBox.TabIndex = 35;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Harlow Solid Italic", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(104, 415);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(95, 26);
-            this.label11.TabIndex = 34;
-            this.label11.Text = "Class Size";
-            // 
-            // MaxSizeTextBox
-            // 
-            this.MaxSizeTextBox.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MaxSizeTextBox.Location = new System.Drawing.Point(209, 372);
-            this.MaxSizeTextBox.Name = "MaxSizeTextBox";
-            this.MaxSizeTextBox.Size = new System.Drawing.Size(231, 32);
-            this.MaxSizeTextBox.TabIndex = 33;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Harlow Solid Italic", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(107, 377);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(92, 26);
-            this.label12.TabIndex = 32;
-            this.label12.Text = "Max Size";
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Harlow Solid Italic", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(477, 225);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(103, 26);
+            this.label13.TabIndex = 36;
+            this.label13.Text = "AM/PM";
             // 
             // SubjectScheduleEntryForm
             // 
@@ -391,7 +420,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button ClearButton;
         private System.Windows.Forms.Button SaveButton;
-        private System.Windows.Forms.ComboBox AmPmComboBox;
+        private System.Windows.Forms.ComboBox TimeStartAmPmComboBox;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label DescriptionLabel;
         private System.Windows.Forms.Label label10;
@@ -402,5 +431,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox MaxSizeTextBox;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.ComboBox TimeEndAmPmComboBox;
+        private System.Windows.Forms.Label label13;
     }
 }

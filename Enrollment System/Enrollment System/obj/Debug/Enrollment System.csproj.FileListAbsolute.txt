@@ -11,3 +11,4 @@ D:\CODES\C# CODES\Enrollment System\Enrollment System\obj\Debug\Enrollment Syste
 D:\CODES\C# CODES\Enrollment System\Enrollment System\obj\Debug\Enrollment_System.SubjectEntryForm.resources
 D:\CODES\C# CODES\Enrollment System\Enrollment System\obj\Debug\Enrollment_System.MenuForm.resources
 D:\CODES\C# CODES\Enrollment System\Enrollment System\obj\Debug\Enrollment_System.SubjectScheduleEntryForm.resources
+D:\CODES\C# CODES\Enrollment System\Enrollment System\obj\Debug\Enrollment_System.StudentEntryForm.resources
