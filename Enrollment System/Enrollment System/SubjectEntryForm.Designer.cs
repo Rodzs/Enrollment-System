@@ -50,10 +50,6 @@
             this.PrerequisiteRadioButton = new System.Windows.Forms.RadioButton();
             this.CorequisiteRadioButton = new System.Windows.Forms.RadioButton();
             this.SubjectDataGridView = new System.Windows.Forms.DataGridView();
-            this.SubjectCodeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DescriptionColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.UnitsColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CoPrerequisiteColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SubjectCodeRequisiteTextBox = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.SaveButton = new System.Windows.Forms.Button();
@@ -62,6 +58,10 @@
             this.subjectFileBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.subjectFileTableAdapter = new Enrollment_System.VelayoDataSetTableAdapters.SubjectFileTableAdapter();
             this.MenuButton = new System.Windows.Forms.Button();
+            this.SubjectCodeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DescriptionColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UnitsColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CoPrerequisiteColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SubjectDataGridView)).BeginInit();
@@ -308,29 +308,6 @@
             this.SubjectDataGridView.Size = new System.Drawing.Size(741, 150);
             this.SubjectDataGridView.TabIndex = 22;
             // 
-            // SubjectCodeColumn
-            // 
-            this.SubjectCodeColumn.HeaderText = "Subject Code";
-            this.SubjectCodeColumn.Name = "SubjectCodeColumn";
-            this.SubjectCodeColumn.Width = 150;
-            // 
-            // DescriptionColumn
-            // 
-            this.DescriptionColumn.HeaderText = "Description";
-            this.DescriptionColumn.Name = "DescriptionColumn";
-            this.DescriptionColumn.Width = 250;
-            // 
-            // UnitsColumn
-            // 
-            this.UnitsColumn.HeaderText = "Units";
-            this.UnitsColumn.Name = "UnitsColumn";
-            // 
-            // CoPrerequisiteColumn
-            // 
-            this.CoPrerequisiteColumn.HeaderText = "Co/Pre-requisite";
-            this.CoPrerequisiteColumn.Name = "CoPrerequisiteColumn";
-            this.CoPrerequisiteColumn.Width = 150;
-            // 
             // SubjectCodeRequisiteTextBox
             // 
             this.SubjectCodeRequisiteTextBox.Font = new System.Drawing.Font("Harlow Solid Italic", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -397,6 +374,34 @@
             this.MenuButton.UseVisualStyleBackColor = true;
             this.MenuButton.Click += new System.EventHandler(this.MenuButton_Click);
             // 
+            // SubjectCodeColumn
+            // 
+            this.SubjectCodeColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.SubjectCodeColumn.HeaderText = "Subject Code";
+            this.SubjectCodeColumn.Name = "SubjectCodeColumn";
+            this.SubjectCodeColumn.Width = 150;
+            // 
+            // DescriptionColumn
+            // 
+            this.DescriptionColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.DescriptionColumn.HeaderText = "Description";
+            this.DescriptionColumn.Name = "DescriptionColumn";
+            this.DescriptionColumn.Width = 250;
+            // 
+            // UnitsColumn
+            // 
+            this.UnitsColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.UnitsColumn.HeaderText = "Units";
+            this.UnitsColumn.Name = "UnitsColumn";
+            this.UnitsColumn.Width = 150;
+            // 
+            // CoPrerequisiteColumn
+            // 
+            this.CoPrerequisiteColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.CoPrerequisiteColumn.HeaderText = "Co/Pre-requisite";
+            this.CoPrerequisiteColumn.Name = "CoPrerequisiteColumn";
+            this.CoPrerequisiteColumn.Width = 150;
+            // 
             // SubjectEntryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -453,11 +458,11 @@
         private System.Windows.Forms.DataGridView SubjectDataGridView;
         private System.Windows.Forms.RadioButton PrerequisiteRadioButton;
         private System.Windows.Forms.RadioButton CorequisiteRadioButton;
+        private System.Windows.Forms.Button MenuButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn SubjectCodeColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn DescriptionColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn UnitsColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn CoPrerequisiteColumn;
-        private System.Windows.Forms.Button MenuButton;
     }
 }
 

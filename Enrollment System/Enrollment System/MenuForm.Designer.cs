@@ -87,6 +87,7 @@
             this.StudentEnrollmentEntryButton.TabIndex = 6;
             this.StudentEnrollmentEntryButton.Text = "Student Enrollment Entry";
             this.StudentEnrollmentEntryButton.UseVisualStyleBackColor = true;
+            this.StudentEnrollmentEntryButton.Click += new System.EventHandler(this.StudentEnrollmentEntryButton_Click);
             // 
             // MenuForm
             // 

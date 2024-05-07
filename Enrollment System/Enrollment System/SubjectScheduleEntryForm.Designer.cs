@@ -31,10 +31,8 @@
             this.SubjectEDPCodeTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.ClassSizeTextBox = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.MaxSizeTextBox = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
+            this.TimeEndAmPmComboBox = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.TimeEndDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.MenuButton = new System.Windows.Forms.Button();
             this.TimeStartDateTimePicker = new System.Windows.Forms.DateTimePicker();
@@ -56,8 +54,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.SubjectCodeTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.TimeEndAmPmComboBox = new System.Windows.Forms.ComboBox();
-            this.label13 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -84,10 +80,6 @@
             this.groupBox1.BackColor = System.Drawing.Color.DarkSeaGreen;
             this.groupBox1.Controls.Add(this.TimeEndAmPmComboBox);
             this.groupBox1.Controls.Add(this.label13);
-            this.groupBox1.Controls.Add(this.ClassSizeTextBox);
-            this.groupBox1.Controls.Add(this.label11);
-            this.groupBox1.Controls.Add(this.MaxSizeTextBox);
-            this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.TimeEndDateTimePicker);
             this.groupBox1.Controls.Add(this.MenuButton);
             this.groupBox1.Controls.Add(this.TimeStartDateTimePicker);
@@ -114,46 +106,32 @@
             this.groupBox1.Font = new System.Drawing.Font("Harlow Solid Italic", 26.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(34, 28);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(726, 556);
+            this.groupBox1.Size = new System.Drawing.Size(726, 455);
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Subject Schedule Entry";
             // 
-            // ClassSizeTextBox
+            // TimeEndAmPmComboBox
             // 
-            this.ClassSizeTextBox.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ClassSizeTextBox.Location = new System.Drawing.Point(209, 410);
-            this.ClassSizeTextBox.Name = "ClassSizeTextBox";
-            this.ClassSizeTextBox.Size = new System.Drawing.Size(231, 32);
-            this.ClassSizeTextBox.TabIndex = 35;
+            this.TimeEndAmPmComboBox.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TimeEndAmPmComboBox.FormattingEnabled = true;
+            this.TimeEndAmPmComboBox.Items.AddRange(new object[] {
+            "AM",
+            "PM"});
+            this.TimeEndAmPmComboBox.Location = new System.Drawing.Point(586, 220);
+            this.TimeEndAmPmComboBox.Name = "TimeEndAmPmComboBox";
+            this.TimeEndAmPmComboBox.Size = new System.Drawing.Size(106, 33);
+            this.TimeEndAmPmComboBox.TabIndex = 37;
             // 
-            // label11
+            // label13
             // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Harlow Solid Italic", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(104, 415);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(95, 26);
-            this.label11.TabIndex = 34;
-            this.label11.Text = "Class Size";
-            // 
-            // MaxSizeTextBox
-            // 
-            this.MaxSizeTextBox.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MaxSizeTextBox.Location = new System.Drawing.Point(209, 372);
-            this.MaxSizeTextBox.Name = "MaxSizeTextBox";
-            this.MaxSizeTextBox.Size = new System.Drawing.Size(231, 32);
-            this.MaxSizeTextBox.TabIndex = 33;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Harlow Solid Italic", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(107, 377);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(92, 26);
-            this.label12.TabIndex = 32;
-            this.label12.Text = "Max Size";
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Harlow Solid Italic", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(477, 225);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(103, 26);
+            this.label13.TabIndex = 36;
+            this.label13.Text = "AM/PM";
             // 
             // TimeEndDateTimePicker
             // 
@@ -253,7 +231,7 @@
             // SchoolYearTextBox
             // 
             this.SchoolYearTextBox.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SchoolYearTextBox.Location = new System.Drawing.Point(209, 448);
+            this.SchoolYearTextBox.Location = new System.Drawing.Point(209, 371);
             this.SchoolYearTextBox.Name = "SchoolYearTextBox";
             this.SchoolYearTextBox.Size = new System.Drawing.Size(231, 32);
             this.SchoolYearTextBox.TabIndex = 24;
@@ -262,7 +240,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Harlow Solid Italic", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(82, 453);
+            this.label7.Location = new System.Drawing.Point(82, 376);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(119, 26);
             this.label7.TabIndex = 23;
@@ -361,34 +339,12 @@
             this.label2.TabIndex = 11;
             this.label2.Text = "Subject Code";
             // 
-            // TimeEndAmPmComboBox
-            // 
-            this.TimeEndAmPmComboBox.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TimeEndAmPmComboBox.FormattingEnabled = true;
-            this.TimeEndAmPmComboBox.Items.AddRange(new object[] {
-            "AM",
-            "PM"});
-            this.TimeEndAmPmComboBox.Location = new System.Drawing.Point(586, 220);
-            this.TimeEndAmPmComboBox.Name = "TimeEndAmPmComboBox";
-            this.TimeEndAmPmComboBox.Size = new System.Drawing.Size(106, 33);
-            this.TimeEndAmPmComboBox.TabIndex = 37;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Harlow Solid Italic", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(477, 225);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(103, 26);
-            this.label13.TabIndex = 36;
-            this.label13.Text = "AM/PM";
-            // 
             // SubjectScheduleEntryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.ClientSize = new System.Drawing.Size(801, 596);
+            this.ClientSize = new System.Drawing.Size(801, 505);
             this.Controls.Add(this.groupBox1);
             this.Name = "SubjectScheduleEntryForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -427,10 +383,6 @@
         private System.Windows.Forms.DateTimePicker TimeStartDateTimePicker;
         private System.Windows.Forms.Button MenuButton;
         private System.Windows.Forms.DateTimePicker TimeEndDateTimePicker;
-        private System.Windows.Forms.TextBox ClassSizeTextBox;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox MaxSizeTextBox;
-        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ComboBox TimeEndAmPmComboBox;
         private System.Windows.Forms.Label label13;
     }

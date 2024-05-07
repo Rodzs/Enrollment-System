@@ -49,5 +49,12 @@ namespace Enrollment_System
             studentEntryForm.Show();
             this.Hide();
         }
+
+        private void StudentEnrollmentEntryButton_Click(object sender, EventArgs e)
+        {
+            StudentEnrollmentEntryForm studentEnrollmentEntryForm = new StudentEnrollmentEntryForm();
+            studentEnrollmentEntryForm.Show();
+            this.Hide();
+        }
     }
 }

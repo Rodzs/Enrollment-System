@@ -16,6 +16,7 @@ namespace Enrollment_System
         public SubjectScheduleEntryForm()
         {
             InitializeComponent();
+            TimeFormater();
         }
         string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CODES\C# CODES\Velayo.accdb";
         private void SaveButton_Click(object sender, EventArgs e)
@@ -43,10 +44,10 @@ namespace Enrollment_System
                 thisRow["SSFENDTIME"] = endTime + TimeEndAmPmComboBox.Text;
                 thisRow["SSFDAYS"] = DaysTextBox.Text;
                 thisRow["SSFROOM"] = RoomTextBox.Text;
-                thisRow["SSFMAXSIZE"] = MaxSizeTextBox.Text;
-                thisRow["SSFCLASSSIZE"] = ClassSizeTextBox.Text;
+                thisRow["SSFMAXSIZE"] = "50";
+                thisRow["SSFCLASSSIZE"] = "0";
                 //thisRow["SSFSTATUS"] = SubjectCodeTextBox.Text;
-                thisRow["SSFXM"] = TimeStartAmPmComboBox.Text;
+                //thisRow["SSFXM"] = TimeStartAmPmComboBox.Text;
                 thisRow["SSFSECTION"] = SectionTextBox.Text;
                 thisRow["SSFSCHOOLYEAR"] = SchoolYearTextBox.Text;
 
@@ -73,8 +74,7 @@ namespace Enrollment_System
             menu.Show();
             this.Hide();
         }
-
-        private void SubjectScheduleEntryForm_Load(object sender, EventArgs e)
+        private void TimeFormater()
         {
             TimeStartDateTimePicker.Format = DateTimePickerFormat.Custom;
             TimeStartDateTimePicker.CustomFormat = "hh:mm";
@@ -83,21 +83,25 @@ namespace Enrollment_System
             TimeEndDateTimePicker.CustomFormat = "hh:mm";
             TimeEndDateTimePicker.ShowUpDown = true;
         }
+        private void SubjectScheduleEntryForm_Load(object sender, EventArgs e)
+        {
+            
+        }
 
         private void ClearButton_Click(object sender, EventArgs e)
         {
-            
-            SubjectEDPCodeTextBox.Text = null;
-            SubjectCodeTextBox.Text = null;
-            TimeStartDateTimePicker.Text = null;
-            TimeEndDateTimePicker.Text = null;
-            DaysTextBox.Text = null;
-            RoomTextBox.Text = null;
-            MaxSizeTextBox.Text = null;
-            ClassSizeTextBox.Text = null;
-            TimeStartAmPmComboBox.Text = null;
-            SectionTextBox.Text = null;
-            SchoolYearTextBox.Text = null;
+            if (MessageBox.Show("Are you sure you want to clear all data?", "Clear?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                SubjectEDPCodeTextBox.Text = null;
+                SubjectCodeTextBox.Text = null;
+                TimeStartDateTimePicker.Text = "12:00";
+                TimeEndDateTimePicker.Text = "12:00";
+                DaysTextBox.Text = null;
+                RoomTextBox.Text = null;
+                TimeStartAmPmComboBox.Text = null;
+                SectionTextBox.Text = null;
+                SchoolYearTextBox.Text = null;
+            }
         }
 
         private void SubjectCodeTextBox_KeyPress(object sender, KeyPressEventArgs e)
