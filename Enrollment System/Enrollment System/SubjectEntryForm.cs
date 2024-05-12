@@ -75,30 +75,42 @@ namespace Enrollment_System
 
                     //TODO: Save DATA TO SUBJPREQFILE
 
-                    if ((PrerequisiteRadioButton.Checked || CorequisiteRadioButton.Checked) && (SubjectCodeRequisiteTextBox.Text != null && SubjectCodeRequisiteTextBox.Text != ""))
+                    if ((PrerequisiteRadioButton.Checked || CorequisiteRadioButton.Checked) && 
+                        (SubjectCodeRequisiteTextBox.Text != null && SubjectCodeRequisiteTextBox.Text != ""))
                     {
+
                         OleDbConnection requisiteConnection = new OleDbConnection(connectionString);
-                        string requisite = "SELECT * FROM SUBJECTPREQFILE";
-                        OleDbDataAdapter requisiteAdapter = new OleDbDataAdapter(requisite, requisiteConnection);
-                        OleDbCommandBuilder requisiteBuilder = new OleDbCommandBuilder(requisiteAdapter);
-
-                        DataSet requisiteDataSet = new DataSet();
-                        requisiteAdapter.Fill(requisiteDataSet, "SubjectPreqFile");
-
-                        DataRow requisiteRow = requisiteDataSet.Tables["SubjectPreqFile"].NewRow();
-                        requisiteRow["SUBJCODE"] = SubjectCodeTextBox.Text;
-                        requisiteRow["SUBJPRECODE"] = SubjectCodeRequisiteTextBox.Text;
-                        if (PrerequisiteRadioButton.Checked)
+                        requisiteConnection.Open();
+                        string[] prerequisites = SubjectCodeRequisiteTextBox.Text.Split(',');
+                        foreach (string prerequisite in prerequisites)
                         {
-                            requisiteRow["SUBJCATEGORY"] = "PR";
+                            string requisiteSql = "INSERT INTO SubjectPreqFile (SUBJCODE, SUBJPRECODE, SUBJCATEGORY) VALUES " +
+                                "("+ SubjectCodeTextBox.Text +", "+ prerequisite.Trim() + ", @SUBJCATEGORY)";
+                            OleDbCommand cmd = new OleDbCommand(requisiteSql, requisiteConnection);
+                            cmd.Parameters.AddWithValue("SUBJCATEGORY", PrerequisiteRadioButton.Checked ? "PR" : "CO");
+                            cmd.ExecuteNonQuery();
                         }
-                        else if (CorequisiteRadioButton.Checked)
-                        {
-                            requisiteRow["SUBJCATEGORY"] = "CO";
-                        }
+                        //string requisite = "SELECT * FROM SUBJECTPREQFILE";
+                        //OleDbDataAdapter requisiteAdapter = new OleDbDataAdapter(requisite, requisiteConnection);
+                        //OleDbCommandBuilder requisiteBuilder = new OleDbCommandBuilder(requisiteAdapter);
 
-                        requisiteDataSet.Tables["SubjectPreqFile"].Rows.Add(requisiteRow);
-                        requisiteAdapter.Update(requisiteDataSet, "SubjectPreqFile");
+                        //DataSet requisiteDataSet = new DataSet();
+                        //requisiteAdapter.Fill(requisiteDataSet, "SubjectPreqFile");
+
+                        //DataRow requisiteRow = requisiteDataSet.Tables["SubjectPreqFile"].NewRow();
+                        //requisiteRow["SUBJCODE"] = SubjectCodeTextBox.Text;
+                        //requisiteRow["SUBJPRECODE"] = SubjectCodeRequisiteTextBox.Text;
+                        //if (PrerequisiteRadioButton.Checked)
+                        //{
+                        //    requisiteRow["SUBJCATEGORY"] = "PR";
+                        //}
+                        //else if (CorequisiteRadioButton.Checked)
+                        //{
+                        //    requisiteRow["SUBJCATEGORY"] = "CO";
+                        //}
+
+                        //requisiteDataSet.Tables["SubjectPreqFile"].Rows.Add(requisiteRow);
+                        //requisiteAdapter.Update(requisiteDataSet, "SubjectPreqFile");
                     }
                     PrerequisiteRadioButton.Checked = false;
                     CorequisiteRadioButton.Checked = false;
@@ -115,20 +127,6 @@ namespace Enrollment_System
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
-                //string subjectCodeInput = SubjectCodeRequisiteTextBox.Text.Trim().ToUpper();
-
-                //Check if the subject code already exists in the DataGridView
-                //bool alreadyExists = false;
-                //foreach (DataGridViewRow row in SubjectDataGridView.Rows)
-                //{
-                //    if (row.Cells["SubjectCodeColumn"].Value != null &&
-                //        row.Cells["SubjectCodeColumn"].Value.ToString().ToUpper() == SubjectCodeRequisiteTextBox.Text.Trim().ToUpper())
-                //    {
-                //        alreadyExists = true;
-                //        break;
-                //    }
-                //}
-
                 SubjectDataGridView.Rows.Clear();
 
                 //Connect to SubjectFile
@@ -186,10 +184,6 @@ namespace Enrollment_System
                 {
                     MessageBox.Show("Subject Code Not Found");
                 }
-                //else if (alreadyExists)
-                //{
-                //    MessageBox.Show("Subject Code already exists in the list.");
-                //}
                 else
                 {
                     index = SubjectDataGridView.Rows.Add();

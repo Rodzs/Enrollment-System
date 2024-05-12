@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Common;
 using System.Data.OleDb;
 using System.Drawing;
 using System.Linq;
@@ -17,15 +19,20 @@ namespace Enrollment_System
         public StudentEnrollmentEntryForm()
         {
             InitializeComponent();
+            DBConnect();
         }
+        ArrayList[] startTime = new ArrayList[10];
 
         OleDbConnection dbConnection;
         OleDbCommand dbCommand;
         OleDbDataReader dbDataReader;
-        private void DBRead(string query)
+        private void DBConnect()
         {
             dbConnection = new OleDbConnection(connectionString);
             dbConnection.Open();
+        }
+        private void DBRead(string query)
+        {
             dbCommand = dbConnection.CreateCommand();
             dbCommand.CommandText = query;
             dbDataReader = dbCommand.ExecuteReader();
@@ -45,8 +52,9 @@ namespace Enrollment_System
         int index = 0;
         int units = 0;
         int totalUnits = 0;
-        DateTime? start = null;
-        DateTime? end = null;
+        string day = "";
+        DateTime start = DateTime.MinValue;
+        DateTime end = DateTime.MinValue;
         string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CODES\C# CODES\Velayo.accdb";
         private void IDNumberTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -55,29 +63,22 @@ namespace Enrollment_System
                 try
                 {
                     //Connect to Student File
-                    OleDbConnection studentConnection = new OleDbConnection(connectionString);
-                    studentConnection.Open();
-                    OleDbCommand studentCommand = studentConnection.CreateCommand();
-
-                    string sql = "SELECT * FROM STUDENTFILE";
-                    studentCommand.CommandText = sql;
-
-                    OleDbDataReader studentDataReader = studentCommand.ExecuteReader();
+                    DBRead("SELECT * FROM STUDENTFILE");
                     bool trap = false;
-                    while (studentDataReader.Read())
+                    while (dbDataReader.Read())
                     {
-                        if (studentDataReader["STFSTUDID"].ToString().Trim().ToUpper() == IDNumberTextBox.Text.Trim().ToUpper())
+                        if (dbDataReader["STFSTUDID"].ToString().Trim().ToUpper() == IDNumberTextBox.Text.Trim().ToUpper())
                         {
                             trap = true; break;
                         }
                     }
                     if (trap == true)
                     {
-                        NameLabel.Text = studentDataReader["STFSTUDFNAME"].ToString()+ " " + studentDataReader["STFSTUDMNAME"].ToString() + " " + studentDataReader["STFSTUDLNAME"].ToString();
-                        CourseLabel.Text = studentDataReader["STFSTUDCOURSE"].ToString();
-                        YearLabel.Text = studentDataReader["STFSTUDYEAR"].ToString();
+                        NameLabel.Text = dbDataReader["STFSTUDFNAME"].ToString()+ " " + dbDataReader["STFSTUDMNAME"].ToString() + " " + dbDataReader["STFSTUDLNAME"].ToString();
+                        CourseLabel.Text = dbDataReader["STFSTUDCOURSE"].ToString();
+                        YearLabel.Text = dbDataReader["STFSTUDYEAR"].ToString();
                         searched = true;
-
+                        EDPCodeTextBox.Enabled = true;
                     }
                     else
                     {
@@ -123,12 +124,7 @@ namespace Enrollment_System
                         OleDbDataReader subjectDataReader = subjectCommand.ExecuteReader();
                         
                         bool trap = false;
-                        bool added = false;
-
-                        //DateTime startDateTime = DateTime.Parse(subschedDataReader["SSFSTARTTIME"].ToString());
-                        //DateTime endDateTime = DateTime.Parse(subschedDataReader["SSFENDTIME"].ToString());
-                        //string startTime = startDateTime.ToString("hh:mm tt");
-                        //string endTime = endDateTime.ToString("hh:mm tt");
+                        bool conflict = false;
 
                         while (dbDataReader.Read())
                         {
@@ -141,28 +137,32 @@ namespace Enrollment_System
                                         units = Convert.ToInt32(subjectDataReader["SFSUBJUNITS"]);
                                     }
                                 }
-                                
                                 trap = true; break;
                             }
                         }
-
                         DateTime startTimeSpan = DateTime.Parse(dbDataReader["SSFSTARTTIME"].ToString());
                         DateTime endTimeSpan = DateTime.Parse(dbDataReader["SSFENDTIME"].ToString());
-                        //Work around for date problems
-                        dbCommand.Parameters.AddWithValue("@StartTime", DateTime.Parse("1/1/2001 " + startTimeSpan.ToString("hh:mm tt")));
-                        dbCommand.Parameters.AddWithValue("@EndTime", DateTime.Parse("1/1/2001 " + endTimeSpan.ToString("hh:mm tt")));
-                        dbCommand.Parameters.AddWithValue("@EDPCODE", dbDataReader["SSFEDPCODE"].ToString());
-                        DBUpdate("UPDATE SUBJECTSCHEDFILE SET SSFSTARTTIME = @StartTime, SSFENDTIME = @EndTime WHERE SSFEDPCODE = @EDPCODE");
-                        //MessageBox.Show(startTime.ToString());
-                        //MessageBox.Show(endTime.ToString());
+                        string DaysDb = dbDataReader["SSFDAYS"].ToString();
 
                         if (trap == true)
                         {
-                            if ((start >= startTimeSpan && start <= endTimeSpan) || (end > startTimeSpan && end <= endTimeSpan) || (start < startTimeSpan && end > endTimeSpan))
-                            {
-                                MessageBox.Show("Conflict!!!");
+                            foreach (DataGridViewRow existingrows in EnrollmentDataGridView.Rows)
+                            { 
+                                if (!existingrows.IsNewRow)
+                                {
+                                    start = DateTime.Parse(existingrows.Cells[2].Value.ToString());
+                                    end = DateTime.Parse(existingrows.Cells[3].Value.ToString());
+                                    day = existingrows.Cells[4].Value.ToString();
+                                    //MessageBox.Show(start.ToString());
+                                    //MessageBox.Show(end.ToString());
+                                    //MessageBox.Show(ConflictChecker(day, DaysDb).ToString());
+                                    if (ConflictChecker(DaysDb, day) && ((start.TimeOfDay > startTimeSpan.TimeOfDay && start.TimeOfDay <= endTimeSpan.TimeOfDay) || (end.TimeOfDay > startTimeSpan.TimeOfDay && end.TimeOfDay <= endTimeSpan.TimeOfDay) || (start.TimeOfDay < startTimeSpan.TimeOfDay && end.TimeOfDay > endTimeSpan.TimeOfDay)))
+                                    {
+                                        conflict = true;
+                                    }
+                                }
                             }
-                            else
+                            if (conflict == false)
                             {
                                 index = EnrollmentDataGridView.Rows.Add();
                                 EnrollmentDataGridView.Rows[index].Cells["EDPCodeColumn"].Value = dbDataReader["SSFEDPCODE"].ToString();
@@ -174,21 +174,17 @@ namespace Enrollment_System
                                 EnrollmentDataGridView.Rows[index].Cells["UnitsColumn"].Value = units.ToString();
                                 totalUnits += units;
                                 UnitsLabel.Text = totalUnits.ToString();
+                                EDPCodeTextBox.Text = "";
+                            }
+                            else
+                            {
+                                MessageBox.Show("Conflict!");
                             }
                         }
                         else
                         {
                             MessageBox.Show("No EDP Code found!", "Error!");
                         }
-
-                        
-                        //MessageBox.Show(startTimeSpan.ToString());
-                        //MessageBox.Show(endTimeSpan.ToString());
-                        //MessageBox.Show(start.ToString());
-                        //MessageBox.Show(end.ToString());
-                        start = startTimeSpan;
-                        end = endTimeSpan;
-                        added = true;
                     }
                     catch (Exception ex)
                     {
@@ -198,9 +194,129 @@ namespace Enrollment_System
             }
         }
 
+        static bool ConflictChecker(string sched1, string sched2)
+        {
+            if (sched1.Contains("TTHS") || sched1.Contains("TTH"))
+            {
+                if (sched2.Contains("TUE"))
+                {
+                    return true;
+                }else if (sched2.Contains("THU"))
+                {
+                    return true;
+                }else if (sched2.Contains("SAT"))
+                {
+                    return true;
+                }
+            }
+            if (sched2.Contains("TTHS") || sched2.Contains("TTH"))
+            {
+                if (sched1.Contains("TUE"))
+                {
+                    return true;
+                }
+                else if (sched1.Contains("THU"))
+                {
+                    return true;
+                }
+                else if (sched1.Contains("SAT"))
+                {
+                    return true;
+                }
+            }
+            if (sched1.Contains("MWF"))
+            {
+                if (sched2.Contains("MON"))
+                {
+                    return true;
+                }
+                else if (sched2.Contains("WED"))
+                {
+                    return true;
+                }
+                else if (sched2.Contains("FRI"))
+                {
+                    return true;
+                }
+            }
+            if (sched2.Contains("MWF"))
+            {
+                if (sched1.Contains("MON"))
+                {
+                    return true;
+                }
+                else if (sched1.Contains("WED"))
+                {
+                    return true;
+                }
+                else if (sched1.Contains("FRI"))
+                {
+                    return true;
+                }
+            }
+            if (sched1 == sched2)
+            {
+                return true;
+            }
+            return false;
+        }
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            
+            bool added = false;
+            if (IDNumberTextBox.Text != "")
+            {
+                if (EncoderTextBox.Text != "")
+                {
+                    OleDbConnection enDetailConnection = new OleDbConnection(connectionString);
+                    string sql = "SELECT * FROM ENROLLMENTDETAILFILE";
+                    enDetailConnection.Open();
+                    OleDbDataAdapter enDetailAdapter = new OleDbDataAdapter(sql, enDetailConnection);
+                    OleDbCommandBuilder enDetailBuilder = new OleDbCommandBuilder(enDetailAdapter);
+
+                    DataSet enDetailDataSet = new DataSet();
+                    enDetailAdapter.Fill(enDetailDataSet, "EnrollmentDetailFile");
+
+                    foreach (DataGridViewRow existingrows in EnrollmentDataGridView.Rows)
+                    {
+                        DataRow enDetailRow = enDetailDataSet.Tables["EnrollmentDetailFile"].NewRow();
+                        enDetailRow["ENRDFSTUDID"] = IDNumberTextBox.Text;
+                        enDetailRow["ENRDFSTUDSUBJCODE"] = existingrows.Cells[1].Value.ToString();
+                        enDetailRow["ENRDFSTUDEDPCODE"] = existingrows.Cells[0].Value.ToString();
+                        DBUpdate("UPDATE SUBJECTSCHEDFILE set SSFCLASSSIZE=" + (Convert.ToInt32(dbDataReader["SSFCLASSSIZE"]) + 1) + " where SSFEDPCODE='" + existingrows.Cells[0].Value.ToString() + "'");
+
+                        enDetailDataSet.Tables["EnrollmentDetailFile"].Rows.Add(enDetailRow);
+                    }
+                    enDetailAdapter.Update(enDetailDataSet, "EnrollmentDetailFile");
+
+                    MessageBox.Show("Entries Recorded!");
+                }
+                else
+                {
+                    MessageBox.Show("Please enter name of the Encoder!");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please enter student ID Number first!");
+            }
+           
+        }
+
+        private void ClearButton_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to clear all text?", "Clear?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                IDNumberTextBox.Text = "";
+                NameLabel.Text = "";
+                CourseLabel.Text = "";
+                YearLabel.Text = "";
+                EDPCodeTextBox.Text = "";
+                UnitsLabel.Text = "";
+                units = 0;
+                EncoderTextBox.Text = "";
+                EDPCodeTextBox.Enabled = false;
+                EnrollmentDataGridView.Rows.Clear();
+            }
         }
     }
 }
