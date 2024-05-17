@@ -64,6 +64,7 @@
             this.SubjectEDPCodeTextBox.Name = "SubjectEDPCodeTextBox";
             this.SubjectEDPCodeTextBox.Size = new System.Drawing.Size(231, 32);
             this.SubjectEDPCodeTextBox.TabIndex = 10;
+            this.SubjectEDPCodeTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SubjectEDPCodeTextBox_KeyPress);
             // 
             // label1
             // 

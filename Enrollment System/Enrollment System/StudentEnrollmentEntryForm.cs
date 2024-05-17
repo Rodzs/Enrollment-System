@@ -33,9 +33,9 @@ namespace Enrollment_System
         DateTime start = DateTime.MinValue;
         DateTime end = DateTime.MinValue;
 
-        //string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\Server2\second semester 2023-2024\LAB802\79866_CC_APPSDEV22_1200_0130_PM_TTH\79866-23243801\Desktop\FINALS\Velayo.accdb";
+        string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\Server2\second semester 2023-2024\LAB802\79866_CC_APPSDEV22_1200_0130_PM_TTH\79866-23243801\Desktop\FINALS\Velayo.accdb";
         //string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\Server2\second semester 2023-2024\LAB802\79866_CC_APPSDEV22_1200_0130_PM_TTH\79866-23243801\Desktop\Enrollment-System-main\Velayo.accdb";
-        string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CODES\C# CODES\Velayo.accdb";
+        //string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CODES\C# CODES\Velayo.accdb";
         private void IDNumberTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
@@ -142,7 +142,7 @@ namespace Enrollment_System
                                     start = DateTime.Parse(existingrows.Cells[2].Value.ToString());
                                     end = DateTime.Parse(existingrows.Cells[3].Value.ToString());
                                     day = existingrows.Cells[4].Value.ToString();
-                                    if (ConflictChecker(DaysDb, day) && ((start.TimeOfDay > startTimeSpan.TimeOfDay && start.TimeOfDay <= endTimeSpan.TimeOfDay) || (end.TimeOfDay > startTimeSpan.TimeOfDay && end.TimeOfDay <= endTimeSpan.TimeOfDay) || (start.TimeOfDay < startTimeSpan.TimeOfDay && end.TimeOfDay > endTimeSpan.TimeOfDay)))
+                                    if (ConflictChecker(DaysDb, day) && ((start.TimeOfDay > startTimeSpan.TimeOfDay && start.TimeOfDay < endTimeSpan.TimeOfDay) || (end.TimeOfDay > startTimeSpan.TimeOfDay && end.TimeOfDay < endTimeSpan.TimeOfDay) || (start.TimeOfDay < startTimeSpan.TimeOfDay && end.TimeOfDay > endTimeSpan.TimeOfDay)))
                                     {
                                         conflict = true;
                                     }
@@ -346,6 +346,7 @@ namespace Enrollment_System
 
                                 MessageBox.Show("Entries Recorded!");
                                 clearText();
+                                totalUnits = 0;
                             }
                             else
                             {
@@ -386,6 +387,7 @@ namespace Enrollment_System
             UnitsLabel.Text = "";
             DatesDateTimePicker.Value = DateTime.Now;
             units = 0;
+            totalUnits = 0;
             EncoderTextBox.Text = "";
             EDPCodeTextBox.Enabled = false;
             EnrollmentDataGridView.Rows.Clear();

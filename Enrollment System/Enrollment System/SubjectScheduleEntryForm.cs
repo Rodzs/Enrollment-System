@@ -18,50 +18,75 @@ namespace Enrollment_System
             InitializeComponent();
             TimeFormater();
         }
-        string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CODES\C# CODES\Velayo.accdb";
+        bool edpTrap = false;
 
+        Connection connector = new Connection();
+        //string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CODES\C# CODES\Velayo.accdb";
+        string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\Server2\second semester 2023-2024\LAB802\79866_CC_APPSDEV22_1200_0130_PM_TTH\79866-23243801\Desktop\FINALS\Velayo.accdb";
         private void SaveButton_Click(object sender, EventArgs e)
         {
             TimeSpan startDate = TimeStartDateTimePicker.Value.TimeOfDay;
             string startTime = TimeStartDateTimePicker.Value.ToString("hh:mm");
             TimeSpan endDate = TimeEndDateTimePicker.Value.TimeOfDay;
             string endTime = TimeEndDateTimePicker.Value.ToString("hh:mm");
-
             try
             {
-                OleDbConnection thisConnection = new OleDbConnection(connectionString);
-                string sql = "SELECT * FROM SUBJECTSCHEDFILE";
-                thisConnection.Open();
-                OleDbDataAdapter thisAdapter = new OleDbDataAdapter(sql, thisConnection);
-                OleDbCommandBuilder thisBuilder = new OleDbCommandBuilder(thisAdapter);
+                connector.DBRead("SELECT * FROM SUBJECTSCHEDFILE");
+                while (connector.dbDataReader.Read())
+                {
+                    if (connector.dbDataReader["SSFEDPCODE"].ToString().Trim() == SubjectEDPCodeTextBox.Text.Trim())
+                    {
+                        edpTrap = true; break;
+                    }
+                }
+                if (SubjectEDPCodeTextBox.Text != "" || SubjectCodeTextBox.Text != "" || DaysTextBox.Text != "" || RoomTextBox.Text != "" ||
+                TimeStartAmPmComboBox.Text != "" || TimeEndAmPmComboBox.Text != "" || SectionTextBox.Text != "" || SchoolYearTextBox.Text != "")
+                {
+                    if (edpTrap == false)
+                    {
+                        OleDbConnection thisConnection = new OleDbConnection(connectionString);
+                        string sql = "SELECT * FROM SUBJECTSCHEDFILE";
+                        thisConnection.Open();
+                        OleDbDataAdapter thisAdapter = new OleDbDataAdapter(sql, thisConnection);
+                        OleDbCommandBuilder thisBuilder = new OleDbCommandBuilder(thisAdapter);
 
-                DataSet thisDataSet = new DataSet();
-                thisAdapter.Fill(thisDataSet, "SubjectSchedFile");
+                        DataSet thisDataSet = new DataSet();
+                        thisAdapter.Fill(thisDataSet, "SubjectSchedFile");
 
-                DataRow thisRow = thisDataSet.Tables["SubjectSchedFile"].NewRow();
-                thisRow["SSFEDPCODE"] = SubjectEDPCodeTextBox.Text;
-                thisRow["SSFSUBJCODE"] = SubjectCodeTextBox.Text.ToUpper();
-                thisRow["SSFSTARTTIME"] = startTime + TimeStartAmPmComboBox.Text;
-                thisRow["SSFENDTIME"] = endTime + TimeEndAmPmComboBox.Text;
-                thisRow["SSFDAYS"] = DaysTextBox.Text;
-                thisRow["SSFROOM"] = RoomTextBox.Text;
-                thisRow["SSFMAXSIZE"] = "50";
-                thisRow["SSFCLASSSIZE"] = "0";
-                //thisRow["SSFSTATUS"] = SubjectCodeTextBox.Text;
-                //thisRow["SSFXM"] = TimeStartAmPmComboBox.Text;
-                thisRow["SSFSECTION"] = SectionTextBox.Text;
-                thisRow["SSFSCHOOLYEAR"] = SchoolYearTextBox.Text;
+                        DataRow thisRow = thisDataSet.Tables["SubjectSchedFile"].NewRow();
+                        thisRow["SSFEDPCODE"] = SubjectEDPCodeTextBox.Text;
+                        thisRow["SSFSUBJCODE"] = SubjectCodeTextBox.Text.ToUpper();
+                        thisRow["SSFSTARTTIME"] = startTime + TimeStartAmPmComboBox.Text;
+                        thisRow["SSFENDTIME"] = endTime + TimeEndAmPmComboBox.Text;
+                        thisRow["SSFDAYS"] = DaysTextBox.Text;
+                        thisRow["SSFROOM"] = RoomTextBox.Text;
+                        thisRow["SSFMAXSIZE"] = "50";
+                        thisRow["SSFCLASSSIZE"] = "0";
+                        thisRow["SSFSTATUS"] = "AC";
+                        thisRow["SSFSECTION"] = SectionTextBox.Text;
+                        thisRow["SSFSCHOOLYEAR"] = SchoolYearTextBox.Text;
 
 
-                thisDataSet.Tables["SubjectSchedFile"].Rows.Add(thisRow);
-                thisAdapter.Update(thisDataSet, "SubjectSchedFile");
+                        thisDataSet.Tables["SubjectSchedFile"].Rows.Add(thisRow);
+                        thisAdapter.Update(thisDataSet, "SubjectSchedFile");
 
-                MessageBox.Show("Entries Recorded!");
+                        MessageBox.Show("Entries Recorded!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("This EDP Code is already enrolled!");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Please input necessary details in the textbox!");
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+            edpTrap = false;
         }
 
         private void SubjectScheduleEntryForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -99,7 +124,9 @@ namespace Enrollment_System
                 TimeEndDateTimePicker.Text = "12:00";
                 DaysTextBox.Text = null;
                 RoomTextBox.Text = null;
+                DescriptionLabel.Text = null;
                 TimeStartAmPmComboBox.Text = null;
+                TimeEndAmPmComboBox.Text = null;
                 SectionTextBox.Text = null;
                 SchoolYearTextBox.Text = null;
             }
@@ -111,6 +138,8 @@ namespace Enrollment_System
             {
                 try
                 {
+
+
                     OleDbConnection subjectConnection = new OleDbConnection(connectionString);
                     subjectConnection.Open();
                     OleDbCommand subjectCommand = subjectConnection.CreateCommand();
@@ -127,7 +156,7 @@ namespace Enrollment_System
                             trap = true; break;
                         }
                     }
-
+                    
                     if (trap == true)
                     {
                         DescriptionLabel.Text = subjectDataReader["SFSUBJDESC"].ToString();
@@ -137,12 +166,18 @@ namespace Enrollment_System
 
                         MessageBox.Show("Subject not found!", "Error!");
                     }
+
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
             }
+        }
+
+        private void SubjectEDPCodeTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            
         }
     }
 }
