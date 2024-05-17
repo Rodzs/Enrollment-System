@@ -33,6 +33,7 @@ namespace Enrollment_System
         DateTime start = DateTime.MinValue;
         DateTime end = DateTime.MinValue;
 
+        //string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\SHADOW\Desktop\Enrollment-System-main\Velayo.accdb";
         string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\Server2\second semester 2023-2024\LAB802\79866_CC_APPSDEV22_1200_0130_PM_TTH\79866-23243801\Desktop\FINALS\Velayo.accdb";
         //string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\Server2\second semester 2023-2024\LAB802\79866_CC_APPSDEV22_1200_0130_PM_TTH\79866-23243801\Desktop\Enrollment-System-main\Velayo.accdb";
         //string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CODES\C# CODES\Velayo.accdb";
@@ -107,7 +108,7 @@ namespace Enrollment_System
 
                         bool trapEDP = false;
                         bool conflict = false;
-
+                        bool unitsTrapper = false;
                         while (connector.dbDataReader.Read())
                         {
                             //EDP Code Trapper
@@ -142,28 +143,40 @@ namespace Enrollment_System
                                     start = DateTime.Parse(existingrows.Cells[2].Value.ToString());
                                     end = DateTime.Parse(existingrows.Cells[3].Value.ToString());
                                     day = existingrows.Cells[4].Value.ToString();
-                                    if (ConflictChecker(DaysDb, day) && ((start.TimeOfDay > startTimeSpan.TimeOfDay && start.TimeOfDay < endTimeSpan.TimeOfDay) || (end.TimeOfDay > startTimeSpan.TimeOfDay && end.TimeOfDay < endTimeSpan.TimeOfDay) || (start.TimeOfDay < startTimeSpan.TimeOfDay && end.TimeOfDay > endTimeSpan.TimeOfDay)))
+                                    if (ConflictChecker(DaysDb, day) && ((start.TimeOfDay > startTimeSpan.TimeOfDay && start.TimeOfDay < endTimeSpan.TimeOfDay) || (end.TimeOfDay > startTimeSpan.TimeOfDay && end.TimeOfDay <= endTimeSpan.TimeOfDay) || (start.TimeOfDay < startTimeSpan.TimeOfDay && end.TimeOfDay > endTimeSpan.TimeOfDay)))
                                     {
                                         conflict = true;
                                     }
                                 }
                             }
+                            //Units Trapper
+                            if ((units + totalUnits) > 30)
+                            {
+                                unitsTrapper = true;
+                            }
+
                             if (max == false)
                             {
                                 if (conflict == false)
                                 {
-                                    index = EnrollmentDataGridView.Rows.Add();
-                                    EnrollmentDataGridView.Rows[index].Cells["EDPCodeColumn"].Value = connector.dbDataReader["SSFEDPCODE"].ToString();
-                                    EnrollmentDataGridView.Rows[index].Cells["SubjectCodeColumn"].Value = connector.dbDataReader["SSFSUBJCODE"].ToString();
-                                    EnrollmentDataGridView.Rows[index].Cells["StartTimeColumn"].Value = startTimeSpan.ToString("hh:mm tt");
-                                    EnrollmentDataGridView.Rows[index].Cells["EndTimeColumn"].Value = endTimeSpan.ToString("hh:mm tt");
-                                    EnrollmentDataGridView.Rows[index].Cells["DaysColumn"].Value = connector.dbDataReader["SSFDAYS"].ToString();
-                                    EnrollmentDataGridView.Rows[index].Cells["RoomColumn"].Value = connector.dbDataReader["SSFROOM"].ToString();
-                                    EnrollmentDataGridView.Rows[index].Cells["UnitsColumn"].Value = units.ToString();
-                                    totalUnits += units;
-                                    UnitsLabel.Text = totalUnits.ToString();
-                                    EDPCodeTextBox.Text = "";
-                                    
+                                    if (unitsTrapper == false)
+                                    {
+                                        index = EnrollmentDataGridView.Rows.Add();
+                                        EnrollmentDataGridView.Rows[index].Cells["EDPCodeColumn"].Value = connector.dbDataReader["SSFEDPCODE"].ToString();
+                                        EnrollmentDataGridView.Rows[index].Cells["SubjectCodeColumn"].Value = connector.dbDataReader["SSFSUBJCODE"].ToString();
+                                        EnrollmentDataGridView.Rows[index].Cells["StartTimeColumn"].Value = startTimeSpan.ToString("hh:mm tt");
+                                        EnrollmentDataGridView.Rows[index].Cells["EndTimeColumn"].Value = endTimeSpan.ToString("hh:mm tt");
+                                        EnrollmentDataGridView.Rows[index].Cells["DaysColumn"].Value = connector.dbDataReader["SSFDAYS"].ToString();
+                                        EnrollmentDataGridView.Rows[index].Cells["RoomColumn"].Value = connector.dbDataReader["SSFROOM"].ToString();
+                                        EnrollmentDataGridView.Rows[index].Cells["UnitsColumn"].Value = units.ToString();
+                                        totalUnits += units;
+                                        UnitsLabel.Text = totalUnits.ToString();
+                                        EDPCodeTextBox.Text = "";
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Maximum units! Cannot add more than 30!");
+                                    }
                                 }
                                 else
                                 {
@@ -205,6 +218,10 @@ namespace Enrollment_System
                 {
                     return true;
                 }
+                if (sched2.Contains("TTH"))
+                {
+                    return true;
+                }
             }
             if (sched2.Contains("TTHS") || sched2.Contains("TTH"))
             {
@@ -220,8 +237,12 @@ namespace Enrollment_System
                 {
                     return true;
                 }
+                if (sched1.Contains("TTH"))
+                {
+                    return true;
+                }
             }
-            if (sched1.Contains("MWF"))
+            if (sched1.Contains("MWF") || sched1.Contains("MW"))
             {
                 if (sched2.Contains("MON"))
                 {
@@ -235,8 +256,12 @@ namespace Enrollment_System
                 {
                     return true;
                 }
+                if (sched2.Contains("MW"))
+                {
+                    return true;
+                }
             }
-            if (sched2.Contains("MWF"))
+            if (sched2.Contains("MWF") || sched2.Contains("MW"))
             {
                 if (sched1.Contains("MON"))
                 {
@@ -247,6 +272,10 @@ namespace Enrollment_System
                     return true;
                 }
                 else if (sched1.Contains("FRI"))
+                {
+                    return true;
+                }
+                if (sched1.Contains("MW"))
                 {
                     return true;
                 }
@@ -263,112 +292,126 @@ namespace Enrollment_System
             bool idTrap = false;
             if (IDNumberTextBox.Text != "")
             {
-                if (EncoderTextBox.Text != "")
+                if (CourseLabel.Text != "")
                 {
-                    //connect detail file
-                    OleDbConnection enDetailConnection = new OleDbConnection(connectionString);
-                    enDetailConnection.Open();
-                    OleDbCommand enDetailCommand = enDetailConnection.CreateCommand();
-
-                    string enDetail = "SELECT * FROM ENROLLMENTDETAILFILE";
-                    enDetailCommand.CommandText = enDetail;
-
-                    OleDbDataReader enDetailDataReader = enDetailCommand.ExecuteReader();
-                    while (enDetailDataReader.Read())
+                    if (EncoderTextBox.Text != "")
                     {
-                        foreach (DataGridViewRow existingrows in EnrollmentDataGridView.Rows)
+                        if (EnrollmentDataGridView.Rows.Count > 0)
                         {
-                            if ((enDetailDataReader["ENRDFSTUDID"].ToString().Trim() == IDNumberTextBox.Text.Trim()) && (enDetailDataReader["ENRDFSTUDEDPCODE"].ToString().Trim() == existingrows.Cells[0].Value.ToString().Trim()))
+                            //connect detail file
+                            OleDbConnection enDetailConnection = new OleDbConnection(connectionString);
+                            enDetailConnection.Open();
+                            OleDbCommand enDetailCommand = enDetailConnection.CreateCommand();
+
+                            string enDetail = "SELECT * FROM ENROLLMENTDETAILFILE";
+                            enDetailCommand.CommandText = enDetail;
+
+                            OleDbDataReader enDetailDataReader = enDetailCommand.ExecuteReader();
+                            while (enDetailDataReader.Read())
                             {
-
-                                found = true; break;
-                            }
-                        }
-                    }
-                    //connect header file
-                    OleDbConnection headerConnection = new OleDbConnection(connectionString);
-                    headerConnection.Open();
-                    OleDbCommand headerCommand = headerConnection.CreateCommand();
-
-                    string header = "SELECT * FROM ENROLLMENTHEADERFILE";
-                    headerCommand.CommandText = header;
-
-                    OleDbDataReader headerDataReader = headerCommand.ExecuteReader();
-                    while (headerDataReader.Read())
-                    {
-                        if (headerDataReader["ENRHFSTUDID"].ToString().Trim() == IDNumberTextBox.Text.Trim())
-                        {
-                            idTrap = true; break;
-                        }
-                    }
-
-                    if (found == false)
-                    {
-                        if (max == false)
-                        {
-                            if (idTrap == false)
-                            {
-                                string sql = "SELECT * FROM ENROLLMENTDETAILFILE";
-                                OleDbDataAdapter enDetailAdapter = new OleDbDataAdapter(sql, connector.dbConnection);
-                                OleDbCommandBuilder enDetailBuilder = new OleDbCommandBuilder(enDetailAdapter);
-
-                                DataSet enDetailDataSet = new DataSet();
-                                enDetailAdapter.Fill(enDetailDataSet, "EnrollmentDetailFile");
-
                                 foreach (DataGridViewRow existingrows in EnrollmentDataGridView.Rows)
                                 {
-                                    DataRow enDetailRow = enDetailDataSet.Tables["EnrollmentDetailFile"].NewRow();
-                                    enDetailRow["ENRDFSTUDID"] = IDNumberTextBox.Text;
-                                    enDetailRow["ENRDFSTUDSUBJCODE"] = existingrows.Cells[1].Value.ToString();
-                                    enDetailRow["ENRDFSTUDEDPCODE"] = existingrows.Cells[0].Value.ToString();
-                                    connector.DBUpdate("UPDATE SUBJECTSCHEDFILE set SSFCLASSSIZE=" + (Convert.ToInt32(connector.dbDataReader["SSFCLASSSIZE"]) + 1) + " where SSFEDPCODE='" + existingrows.Cells[0].Value.ToString() + "'");
+                                    if ((enDetailDataReader["ENRDFSTUDID"].ToString().Trim() == IDNumberTextBox.Text.Trim()) && (enDetailDataReader["ENRDFSTUDEDPCODE"].ToString().Trim() == existingrows.Cells[0].Value.ToString().Trim()))
+                                    {
 
-                                    enDetailDataSet.Tables["EnrollmentDetailFile"].Rows.Add(enDetailRow);
+                                        found = true; break;
+                                    }
                                 }
-                                enDetailAdapter.Update(enDetailDataSet, "EnrollmentDetailFile");
+                            }
+                            //connect header file
+                            OleDbConnection headerConnection = new OleDbConnection(connectionString);
+                            headerConnection.Open();
+                            OleDbCommand headerCommand = headerConnection.CreateCommand();
 
-                                string headerSql = "SELECT * FROM ENROLLMENTHEADERFILE";
-                                OleDbDataAdapter headerAdapter = new OleDbDataAdapter(headerSql, connector.dbConnection);
-                                OleDbCommandBuilder headerBuilder = new OleDbCommandBuilder(headerAdapter);
+                            string header = "SELECT * FROM ENROLLMENTHEADERFILE";
+                            headerCommand.CommandText = header;
 
-                                DataSet headerDataSet = new DataSet();
-                                headerAdapter.Fill(headerDataSet, "EnrollmentHeaderFile");
+                            OleDbDataReader headerDataReader = headerCommand.ExecuteReader();
+                            while (headerDataReader.Read())
+                            {
+                                if (headerDataReader["ENRHFSTUDID"].ToString().Trim() == IDNumberTextBox.Text.Trim())
+                                {
+                                    idTrap = true; break;
+                                }
+                            }
 
-                                DataRow thisRow = headerDataSet.Tables["EnrollmentHeaderFile"].NewRow();
-                                thisRow["ENRHFSTUDID"] = IDNumberTextBox.Text;
-                                thisRow["ENRHFSTUDDATEENROLL"] = DatesDateTimePicker.Text;
-                                thisRow["ENRHFSTUDSCHLYR"] = schoolYr.ToString();
-                                thisRow["ENRHFSTUDENCODER"] = EncoderTextBox.Text;
-                                thisRow["ENRHFSTUDTOTALUNITS"] = totalUnits.ToString();
+                            if (found == false)
+                            {
+                                if (max == false)
+                                {
+                                    if (idTrap == false)
+                                    {
+                                        string sql = "SELECT * FROM ENROLLMENTDETAILFILE";
+                                        OleDbDataAdapter enDetailAdapter = new OleDbDataAdapter(sql, connector.dbConnection);
+                                        OleDbCommandBuilder enDetailBuilder = new OleDbCommandBuilder(enDetailAdapter);
 
-                                headerDataSet.Tables["EnrollmentHeaderFile"].Rows.Add(thisRow);
-                                headerAdapter.Update(headerDataSet, "EnrollmentHeaderFile");
+                                        DataSet enDetailDataSet = new DataSet();
+                                        enDetailAdapter.Fill(enDetailDataSet, "EnrollmentDetailFile");
 
-                                MessageBox.Show("Entries Recorded!");
-                                clearText();
-                                totalUnits = 0;
+                                        foreach (DataGridViewRow existingrows in EnrollmentDataGridView.Rows)
+                                        {
+                                            DataRow enDetailRow = enDetailDataSet.Tables["EnrollmentDetailFile"].NewRow();
+                                            enDetailRow["ENRDFSTUDID"] = IDNumberTextBox.Text;
+                                            enDetailRow["ENRDFSTUDSUBJCODE"] = existingrows.Cells[1].Value.ToString();
+                                            enDetailRow["ENRDFSTUDEDPCODE"] = existingrows.Cells[0].Value.ToString();
+                                            connector.DBUpdate("UPDATE SUBJECTSCHEDFILE set SSFCLASSSIZE=" + (Convert.ToInt32(connector.dbDataReader["SSFCLASSSIZE"]) + 1) + " where SSFEDPCODE='" + existingrows.Cells[0].Value.ToString() + "'");
+
+                                            enDetailDataSet.Tables["EnrollmentDetailFile"].Rows.Add(enDetailRow);
+                                        }
+                                        enDetailAdapter.Update(enDetailDataSet, "EnrollmentDetailFile");
+
+                                        string headerSql = "SELECT * FROM ENROLLMENTHEADERFILE";
+                                        OleDbDataAdapter headerAdapter = new OleDbDataAdapter(headerSql, connector.dbConnection);
+                                        OleDbCommandBuilder headerBuilder = new OleDbCommandBuilder(headerAdapter);
+
+                                        DataSet headerDataSet = new DataSet();
+                                        headerAdapter.Fill(headerDataSet, "EnrollmentHeaderFile");
+
+                                        DataRow thisRow = headerDataSet.Tables["EnrollmentHeaderFile"].NewRow();
+                                        thisRow["ENRHFSTUDID"] = IDNumberTextBox.Text;
+                                        thisRow["ENRHFSTUDDATEENROLL"] = DatesDateTimePicker.Text;
+                                        thisRow["ENRHFSTUDSCHLYR"] = schoolYr.ToString();
+                                        thisRow["ENRHFSTUDENCODER"] = EncoderTextBox.Text;
+                                        thisRow["ENRHFSTUDTOTALUNITS"] = totalUnits.ToString();
+
+                                        headerDataSet.Tables["EnrollmentHeaderFile"].Rows.Add(thisRow);
+                                        headerAdapter.Update(headerDataSet, "EnrollmentHeaderFile");
+
+                                        MessageBox.Show("Entries Recorded!");
+                                        clearText();
+                                        totalUnits = 0;
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("This Student is already Enrolled!");
+                                    }
+
+                                }
+                                else
+                                {
+                                    MessageBox.Show("This EDP Code already has the maximum class size!");
+                                }
+
                             }
                             else
                             {
-                                MessageBox.Show("This Student is already Enrolled!");
+                                MessageBox.Show("Inputted ID number and EDP Code is duplicate!");
                             }
-
                         }
                         else
                         {
-                            MessageBox.Show("This EDP Code already has the maximum class size!");
+                            MessageBox.Show("Please input atleast 1 subject!");
                         }
 
                     }
                     else
                     {
-                        MessageBox.Show("Inputted ID number and EDP Code is duplicate!");
+                        MessageBox.Show("Please enter name of the Encoder!");
                     }
-
                 }
                 else
                 {
-                    MessageBox.Show("Please enter name of the Encoder!");
+                    MessageBox.Show("Please confirm ID Number of student!");
                 }
             }
             else
